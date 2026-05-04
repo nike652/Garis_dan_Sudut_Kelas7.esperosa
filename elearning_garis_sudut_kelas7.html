@@ -1,0 +1,1056 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lato:wght@400;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1a2e5e;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --teal: #0f766e;
+    --teal-light: #ccfbf1;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --gray: #6b7280;
+    --gray-light: #f3f4f6;
+    --white: #ffffff;
+    --border: #e5e7eb;
+    --font: 'Nunito', sans-serif;
+  }
+
+  body { font-family: var(--font); background: transparent; color: #1f2937; }
+
+  .app { max-width: 860px; margin: 0 auto; padding: 0 0 2rem; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a2e5e 0%, #2563eb 100%);
+    border-radius: 16px;
+    padding: 2rem 2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: 60px;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .header h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+  .header p { font-size: 14px; opacity: 0.85; }
+  .tp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+  .tp-item {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .tp-num {
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex; gap: 8px; margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0;
+  }
+  .nav-tab {
+    padding: 10px 20px;
+    border: none; background: none; cursor: pointer;
+    font-family: var(--font); font-size: 14px; font-weight: 600;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    border-radius: 8px 8px 0 0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-tab:hover { color: var(--blue); background: var(--blue-light); }
+  .nav-tab.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--blue-light); }
+  .tab-icon { font-size: 16px; }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* MATERI */
+  .materi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .materi-header {
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 700; font-size: 15px;
+    transition: background 0.2s;
+  }
+  .materi-header:hover { background: var(--gray-light); }
+  .materi-header.blue { background: var(--blue-light); color: var(--navy); border-left: 4px solid var(--blue); }
+  .materi-header.teal { background: var(--teal-light); color: #134e4a; border-left: 4px solid var(--teal); }
+  .materi-header.amber { background: var(--amber-light); color: #78350f; border-left: 4px solid var(--amber); }
+  .materi-header.green { background: var(--green-light); color: #14532d; border-left: 4px solid var(--green); }
+  .chevron { transition: transform 0.3s; font-size: 14px; }
+  .chevron.open { transform: rotate(180deg); }
+  .materi-body { display: none; padding: 0 18px 18px; }
+  .materi-body.open { display: block; }
+
+  .def-box {
+    background: var(--blue-light);
+    border-left: 3px solid var(--blue);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 13.5px;
+  }
+  .def-box strong { color: var(--blue); }
+  .rumus-box {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  .rumus-box .formula { font-size: 17px; font-weight: 700; color: var(--green); margin: 6px 0; }
+  .tip-box {
+    background: var(--amber-light);
+    border-left: 3px solid var(--amber);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .tip-box strong { color: var(--amber); }
+
+  .jenis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .jenis-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .jenis-item .label { font-weight: 700; color: var(--navy); margin: 6px 0 2px; font-size: 13px; }
+  .jenis-item .desc { font-size: 12px; color: var(--gray); }
+
+  svg.diagram { display: block; margin: 12px auto; }
+
+  /* TUGAS */
+  .soal-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .soal-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--blue);
+    color: white;
+    border-radius: 50%;
+    font-size: 13px; font-weight: 700;
+    margin-right: 8px; flex-shrink: 0;
+  }
+  .soal-title { display: flex; align-items: flex-start; gap: 0; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+  .soal-isi { font-size: 13.5px; line-height: 1.7; margin-bottom: 14px; color: #374151; }
+
+  .pilihan-grid { display: grid; gap: 8px; }
+  .pilihan-btn {
+    text-align: left;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 13px;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pilihan-btn:hover { border-color: var(--blue); background: var(--blue-light); }
+  .pilihan-btn.correct { border-color: var(--green); background: var(--green-light); color: #14532d; }
+  .pilihan-btn.wrong { border-color: var(--red); background: var(--red-light); color: #7f1d1d; }
+  .pilihan-btn.reveal-correct { border-color: var(--green); background: var(--green-light); color: #14532d; }
+  .pilihan-key {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: var(--gray-light);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px; flex-shrink: 0;
+    color: var(--gray);
+  }
+  .feedback { margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; display: none; }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green-light); color: #14532d; }
+  .feedback.wrong { background: var(--red-light); color: #7f1d1d; }
+
+  .isian-input {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-family: var(--font); font-size: 14px;
+    transition: border-color 0.2s;
+  }
+  .isian-input:focus { outline: none; border-color: var(--blue); }
+  .check-btn {
+    margin-top: 8px; padding: 9px 20px;
+    background: var(--blue); color: white;
+    border: none; border-radius: 10px;
+    font-family: var(--font); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .check-btn:hover { background: var(--navy); }
+
+  .skor-bar {
+    background: var(--blue-light);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .skor-num { font-size: 32px; font-weight: 800; color: var(--blue); }
+  .skor-label { font-size: 13px; color: var(--gray); }
+  .skor-label strong { display: block; font-size: 15px; color: var(--navy); }
+
+  /* LKPD */
+  .lkpd-header {
+    background: linear-gradient(135deg, #0f766e, #0891b2);
+    border-radius: 14px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 1rem;
+  }
+  .lkpd-header h2 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .lkpd-header p { font-size: 13px; opacity: 0.88; }
+  .lkpd-info { display: flex; gap: 12px; margin-top: 12px; }
+  .lkpd-tag {
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 4px 12px;
+    font-size: 12px; font-weight: 600;
+  }
+
+  .kegiatan-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .kegiatan-hdr {
+    background: var(--teal-light);
+    padding: 12px 18px;
+    font-weight: 700; font-size: 14px; color: #134e4a;
+    border-left: 4px solid var(--teal);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .kegiatan-body { padding: 16px 18px; }
+  .step-list { list-style: none; padding: 0; }
+  .step-list li {
+    padding: 8px 0 8px 28px;
+    position: relative; font-size: 13.5px; line-height: 1.6;
+    border-bottom: 1px dashed var(--border);
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before {
+    content: attr(data-n);
+    position: absolute; left: 0;
+    width: 20px; height: 20px;
+    background: var(--teal);
+    color: white; border-radius: 50%;
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    top: 10px;
+  }
+
+  .obs-table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0;
+  }
+  .obs-table th {
+    background: var(--teal-light);
+    color: #134e4a; padding: 9px 12px;
+    border: 1px solid #99f6e4; font-weight: 700;
+    text-align: center;
+  }
+  .obs-table td {
+    border: 1px solid var(--border);
+    padding: 8px 12px; text-align: center;
+  }
+  .obs-table td.input-cell { background: #f9fafb; }
+  .obs-input {
+    width: 100%; border: 1px solid #d1d5db; border-radius: 6px;
+    padding: 5px 8px; font-family: var(--font); font-size: 13px;
+    text-align: center; background: white;
+  }
+  .obs-input:focus { outline: none; border-color: var(--teal); }
+
+  .kesimpulan-area {
+    width: 100%;
+    min-height: 80px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: var(--font); font-size: 13.5px;
+    resize: vertical; margin-top: 8px;
+  }
+  .kesimpulan-area:focus { outline: none; border-color: var(--teal); }
+
+  .lkpd-submit {
+    background: var(--teal); color: white;
+    border: none; border-radius: 10px;
+    padding: 11px 28px;
+    font-family: var(--font); font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s; margin-top: 12px;
+  }
+  .lkpd-submit:hover { background: #134e4a; }
+
+  .progress-bar-wrap { background: var(--border); border-radius: 20px; height: 8px; margin-bottom: 0; }
+  .progress-bar { background: var(--blue); border-radius: 20px; height: 8px; transition: width 0.4s; }
+
+  @media (max-width: 600px) {
+    .tp-grid { grid-template-columns: 1fr; }
+    .jenis-grid { grid-template-columns: 1fr; }
+    .nav-tab { padding: 9px 12px; font-size: 12px; }
+    .nav-tab span.tab-text { display: none; }
+  }
+</style>
+
+<div class="app">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Aktivitas pembelajaran e-learning bab garis dan sudut kelas 7</h2>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">Matematika · Kelas 7 · Semester 1</div>
+    <h1>Garis dan Sudut</h1>
+    <p>Aktivitas pembelajaran interaktif — materi, tugas individu, dan LKPD</p>
+    <div class="tp-grid">
+      <div class="tp-item"><span class="tp-num">1</span><span>Menganalisis sudut dari dua garis berpotongan</span></div>
+      <div class="tp-item"><span class="tp-num">2</span><span>Menganalisis sudut dari dua garis sejajar & transversal</span></div>
+      <div class="tp-item"><span class="tp-num">3</span><span>Menyelesaikan masalah hubungan antar sudut</span></div>
+      <div class="tp-item"><span class="tp-num">4</span><span>Menentukan besar sudut dalam segitiga</span></div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('materi',this)">
+      <span class="tab-icon">📖</span><span class="tab-text">Materi</span>
+    </button>
+    <button class="nav-tab" onclick="showSection('tugas',this)">
+      <span class="tab-icon">✏️</span><span class="tab-text">Tugas Individu</span>
+    </button>
+    <button class="nav-tab" onclick="showSection('lkpd',this)">
+      <span class="tab-icon">🔬</span><span class="tab-text">LKPD</span>
+    </button>
+  </div>
+
+  <!-- ===================== MATERI ===================== -->
+  <div id="materi" class="section active">
+
+    <!-- 1. Konsep Dasar -->
+    <div class="materi-card">
+      <div class="materi-header blue" onclick="toggleMateri(this)">
+        <span>📐 A. Konsep Dasar Garis dan Sudut</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="materi-body open">
+        <div class="def-box">
+          <strong>Garis</strong> adalah himpunan titik-titik yang berjejer lurus dan tidak terbatas panjangnya ke dua arah. Garis dilambangkan dengan huruf kecil (misal: garis <em>l</em>, garis <em>m</em>).
+        </div>
+        <div class="def-box">
+          <strong>Sudut</strong> adalah daerah yang dibatasi oleh dua sinar garis yang berpangkal di satu titik yang sama (titik sudut).
+        </div>
+        <p style="font-size:13.5px;margin:10px 0 6px;font-weight:700;color:#1a2e5e;">Jenis-Jenis Sudut</p>
+        <div class="jenis-grid">
+          <div class="jenis-item" style="border-color:#bfdbfe;">
+            <svg width="60" height="50"><line x1="10" y1="40" x2="50" y2="40" stroke="#2563eb" stroke-width="2"/><line x1="10" y1="40" x2="50" y2="40" stroke="#2563eb" stroke-width="2"/><path d="M 20 40 A 10 10 0 0 0 20 40" fill="none"/><text x="30" y="20" font-size="11" fill="#2563eb" text-anchor="middle">0°</text></svg>
+            <div class="label">Sudut Lancip</div>
+            <div class="desc">0° &lt; α &lt; 90°</div>
+          </div>
+          <div class="jenis-item" style="border-color:#a7f3d0;">
+            <svg width="60" height="50"><line x1="10" y1="40" x2="50" y2="40" stroke="#0f766e" stroke-width="2"/><line x1="10" y1="40" x2="10" y2="10" stroke="#0f766e" stroke-width="2"/><rect x="10" y="30" width="10" height="10" fill="none" stroke="#0f766e" stroke-width="1.5"/></svg>
+            <div class="label">Sudut Siku-Siku</div>
+            <div class="desc">α = 90°</div>
+          </div>
+          <div class="jenis-item" style="border-color:#fde68a;">
+            <svg width="60" height="50"><line x1="5" y1="40" x2="55" y2="40" stroke="#d97706" stroke-width="2"/><line x1="5" y1="40" x2="35" y2="10" stroke="#d97706" stroke-width="2"/></svg>
+            <div class="label">Sudut Tumpul</div>
+            <div class="desc">90° &lt; α &lt; 180°</div>
+          </div>
+          <div class="jenis-item" style="border-color:#fca5a5;">
+            <svg width="60" height="50"><line x1="5" y1="25" x2="55" y2="25" stroke="#dc2626" stroke-width="2"/><text x="30" y="42" font-size="11" fill="#dc2626" text-anchor="middle">180°</text></svg>
+            <div class="label">Sudut Lurus</div>
+            <div class="desc">α = 180°</div>
+          </div>
+        </div>
+        <div class="rumus-box">
+          <div style="font-size:13px;color:#374151;">Sudut penuh = 360° &nbsp;|&nbsp; Sudut refleks: 180° &lt; α &lt; 360°</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Dua Garis Berpotongan -->
+    <div class="materi-card">
+      <div class="materi-header blue" onclick="toggleMateri(this)">
+        <span>🔀 B. Sudut pada Dua Garis Berpotongan</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="materi-body">
+        <p style="font-size:13.5px;line-height:1.7;margin-bottom:10px;">Ketika dua garis berpotongan, terbentuk <strong>4 sudut</strong>. Sudut-sudut ini memiliki hubungan khusus.</p>
+
+        <svg width="280" height="200" viewBox="0 0 280 200" class="diagram">
+          <line x1="40" y1="160" x2="240" y2="40" stroke="#2563eb" stroke-width="2"/>
+          <line x1="40" y1="40" x2="240" y2="160" stroke="#dc2626" stroke-width="2"/>
+          <circle cx="140" cy="100" r="3" fill="#1a2e5e"/>
+          <!-- arc for angle labels -->
+          <path d="M 155 100 A 15 15 0 0 1 147 86" fill="none" stroke="#6b7280" stroke-width="1.2"/>
+          <path d="M 125 100 A 15 15 0 0 1 133 114" fill="none" stroke="#6b7280" stroke-width="1.2"/>
+          <text x="162" y="90" font-size="13" fill="#2563eb" font-weight="700">∠1</text>
+          <text x="110" y="118" font-size="13" fill="#2563eb" font-weight="700">∠3</text>
+          <text x="108" y="88" font-size="13" fill="#dc2626" font-weight="700">∠2</text>
+          <text x="155" y="120" font-size="13" fill="#dc2626" font-weight="700">∠4</text>
+          <text x="25" y="168" font-size="12" fill="#374151">g</text>
+          <text x="242" y="35" font-size="12" fill="#374151">g</text>
+          <text x="25" y="35" font-size="12" fill="#374151">h</text>
+          <text x="242" y="168" font-size="12" fill="#374151">h</text>
+        </svg>
+
+        <div class="def-box">
+          <strong>1. Sudut Bertolak Belakang (Vertikal)</strong><br>
+          Sudut yang letaknya berhadapan pada dua garis berpotongan. Sudut bertolak belakang <strong>selalu sama besar</strong>.<br>
+          ∠1 = ∠3 &nbsp;&nbsp;dan&nbsp;&nbsp; ∠2 = ∠4
+        </div>
+        <div class="def-box">
+          <strong>2. Sudut Berpelurus (Suplemen)</strong><br>
+          Dua sudut yang jumlahnya 180°. Sudut yang berdampingan pada garis lurus adalah sudut berpelurus.<br>
+          ∠1 + ∠2 = 180° &nbsp;&nbsp;dan&nbsp;&nbsp; ∠2 + ∠3 = 180°
+        </div>
+        <div class="def-box">
+          <strong>3. Sudut Berpenyiku (Komplemen)</strong><br>
+          Dua sudut yang jumlahnya 90°.
+        </div>
+        <div class="tip-box">
+          <strong>💡 Ingat!</strong> Jumlah semua sudut yang terbentuk pada dua garis berpotongan = 360°<br>
+          ∠1 + ∠2 + ∠3 + ∠4 = 360°
+        </div>
+
+        <p style="font-size:13px;font-weight:700;margin:12px 0 6px;color:#1a2e5e;">Contoh Soal:</p>
+        <div style="background:#f9fafb;border-radius:10px;padding:14px;font-size:13.5px;line-height:1.7;">
+          Dua garis berpotongan membentuk ∠1 = 65°. Tentukan besar ∠2, ∠3, dan ∠4!<br>
+          <strong>Penyelesaian:</strong><br>
+          • ∠3 = ∠1 = 65° (bertolak belakang)<br>
+          • ∠2 = 180° − 65° = 115° (berpelurus)<br>
+          • ∠4 = ∠2 = 115° (bertolak belakang)
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Dua Garis Sejajar & Transversal -->
+    <div class="materi-card">
+      <div class="materi-header teal" onclick="toggleMateri(this)">
+        <span>🔲 C. Sudut pada Dua Garis Sejajar & Transversal</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="materi-body">
+        <div class="def-box" style="background:#f0fdfa;border-color:#0f766e;">
+          <strong style="color:#0f766e;">Garis Transversal</strong> adalah garis yang memotong dua garis atau lebih. Ketika memotong dua garis sejajar, terbentuk 8 sudut dengan hubungan istimewa.
+        </div>
+
+        <svg width="300" height="220" viewBox="0 0 300 220" class="diagram">
+          <!-- Garis sejajar -->
+          <line x1="20" y1="70" x2="280" y2="70" stroke="#2563eb" stroke-width="2.5"/>
+          <line x1="20" y1="160" x2="280" y2="160" stroke="#2563eb" stroke-width="2.5"/>
+          <!-- Transversal -->
+          <line x1="80" y1="20" x2="220" y2="210" stroke="#dc2626" stroke-width="2.5"/>
+          <!-- Label garis -->
+          <text x="15" y="65" font-size="13" fill="#2563eb" font-weight="700">l</text>
+          <text x="15" y="155" font-size="13" fill="#2563eb" font-weight="700">m</text>
+          <text x="228" y="205" font-size="13" fill="#dc2626" font-weight="700">t</text>
+          <!-- titik potong atas kira2 x=120 y=70 -->
+          <!-- titik potong bawah kira2 x=163 y=160 -->
+          <!-- Sudut atas -->
+          <text x="96" y="62" font-size="11" fill="#0f766e" font-weight="700">∠1</text>
+          <text x="118" y="62" font-size="11" fill="#0f766e" font-weight="700">∠2</text>
+          <text x="98" y="85" font-size="11" fill="#d97706" font-weight="700">∠3</text>
+          <text x="120" y="85" font-size="11" fill="#d97706" font-weight="700">∠4</text>
+          <!-- Sudut bawah -->
+          <text x="139" y="152" font-size="11" fill="#0f766e" font-weight="700">∠5</text>
+          <text x="161" y="152" font-size="11" fill="#0f766e" font-weight="700">∠6</text>
+          <text x="141" y="174" font-size="11" fill="#d97706" font-weight="700">∠7</text>
+          <text x="163" y="174" font-size="11" fill="#d97706" font-weight="700">∠8</text>
+        </svg>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;">
+          <div class="def-box" style="background:#f0fdfa;border-color:#0f766e;">
+            <strong style="color:#0f766e;">Sudut Sehadap</strong><br>
+            Sama besar &amp; posisi sama<br>
+            ∠1=∠5, ∠2=∠6<br>∠3=∠7, ∠4=∠8
+          </div>
+          <div class="def-box" style="background:#fff7ed;border-color:#d97706;">
+            <strong style="color:#d97706;">Sudut Bersilangan</strong><br>
+            Sama besar, posisi silang<br>
+            ∠3=∠6 (dalam)<br>∠1=∠8, ∠2=∠7 (luar)
+          </div>
+          <div class="def-box" style="background:#faf5ff;border-color:#7c3aed;">
+            <strong style="color:#7c3aed;">Sudut Sepihak Dalam</strong><br>
+            Jumlahnya 180°<br>
+            ∠3+∠5=180°<br>∠4+∠6=180°
+          </div>
+          <div class="def-box" style="background:#fff1f2;border-color:#dc2626;">
+            <strong style="color:#dc2626;">Sudut Sepihak Luar</strong><br>
+            Jumlahnya 180°<br>
+            ∠1+∠7=180°<br>∠2+∠8=180°
+          </div>
+        </div>
+
+        <p style="font-size:13px;font-weight:700;margin:12px 0 6px;color:#0f766e;">Contoh Soal:</p>
+        <div style="background:#f9fafb;border-radius:10px;padding:14px;font-size:13.5px;line-height:1.7;">
+          Garis l // m dipotong transversal t. Diketahui ∠1 = 70°. Tentukan ∠5, ∠3, dan ∠6!<br>
+          <strong>Penyelesaian:</strong><br>
+          • ∠5 = ∠1 = 70° (sehadap)<br>
+          • ∠3 = 180° − 70° = 110° (berpelurus dengan ∠1)<br>
+          • ∠6 = ∠3 = 110° (sehadap) atau ∠3 + ∠6 = 180° ✓
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Sudut dalam Segitiga -->
+    <div class="materi-card">
+      <div class="materi-header green" onclick="toggleMateri(this)">
+        <span>△ D. Sudut dalam Segitiga</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="materi-body">
+        <div class="rumus-box">
+          <div style="font-size:13px;color:#374151;margin-bottom:4px;">Jumlah sudut dalam segitiga</div>
+          <div class="formula">∠A + ∠B + ∠C = 180°</div>
+          <div style="font-size:12px;color:#6b7280;">Berlaku untuk semua jenis segitiga</div>
+        </div>
+
+        <svg width="240" height="160" viewBox="0 0 240 160" class="diagram">
+          <polygon points="120,20 20,140 220,140" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+          <text x="115" y="18" font-size="13" fill="#14532d" font-weight="700">A</text>
+          <text x="5" y="150" font-size="13" fill="#14532d" font-weight="700">B</text>
+          <text x="224" y="150" font-size="13" fill="#14532d" font-weight="700">C</text>
+          <text x="108" y="38" font-size="11" fill="#16a34a">∠A</text>
+          <text x="28" y="132" font-size="11" fill="#16a34a">∠B</text>
+          <text x="196" y="132" font-size="11" fill="#16a34a">∠C</text>
+        </svg>
+
+        <div class="def-box" style="background:#f0fdf4;border-color:#16a34a;">
+          <strong style="color:#16a34a;">Sudut Luar Segitiga</strong><br>
+          Besar sudut luar segitiga = jumlah dua sudut dalam yang tidak berdekatan.<br>
+          Jika ∠D adalah sudut luar di titik C, maka: <strong>∠D = ∠A + ∠B</strong>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;">
+          <div style="background:#f9fafb;border-radius:10px;padding:12px;font-size:13px;">
+            <div style="font-weight:700;color:#14532d;margin-bottom:6px;">Segitiga Sama Sisi</div>
+            ∠A = ∠B = ∠C = 60°
+          </div>
+          <div style="background:#f9fafb;border-radius:10px;padding:12px;font-size:13px;">
+            <div style="font-weight:700;color:#14532d;margin-bottom:6px;">Segitiga Siku-siku</div>
+            Salah satu sudut = 90°<br>Dua sudut lain jumlahnya 90°
+          </div>
+        </div>
+
+        <p style="font-size:13px;font-weight:700;margin:12px 0 6px;color:#14532d;">Contoh Soal:</p>
+        <div style="background:#f9fafb;border-radius:10px;padding:14px;font-size:13.5px;line-height:1.7;">
+          Segitiga ABC dengan ∠A = 55° dan ∠B = 75°. Tentukan ∠C!<br>
+          <strong>Penyelesaian:</strong><br>
+          ∠C = 180° − ∠A − ∠B = 180° − 55° − 75° = <strong>50°</strong>
+        </div>
+      </div>
+    </div>
+  </div><!-- /materi -->
+
+  <!-- ===================== TUGAS INDIVIDU ===================== -->
+  <div id="tugas" class="section">
+    <div class="skor-bar">
+      <div>
+        <div class="skor-num" id="skorDisplay">0</div>
+        <div style="font-size:11px;color:#6b7280;">dari 10 poin</div>
+      </div>
+      <div style="flex:1;">
+        <div class="skor-label"><strong id="skorLabel">Mulai kerjakan soal di bawah!</strong></div>
+        <div class="progress-bar-wrap" style="margin-top:6px;">
+          <div class="progress-bar" id="progressBar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Soal 1 - PG -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">1</span><span>Dua garis berpotongan membentuk ∠1 = 115°. Besar ∠3 (bertolak belakang dengan ∠1) adalah...</span></div>
+      <div class="pilihan-grid" id="q1">
+        <button class="pilihan-btn" onclick="pilih(this,'q1','a',false)"><span class="pilihan-key">A</span> 65°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q1','b',false)"><span class="pilihan-key">B</span> 75°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q1','c',true)"><span class="pilihan-key">C</span> 115°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q1','d',false)"><span class="pilihan-key">D</span> 245°</button>
+      </div>
+      <div class="feedback" id="fb1"></div>
+    </div>
+
+    <!-- Soal 2 - PG -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">2</span><span>Dua garis berpotongan, salah satu sudutnya 48°. Besar sudut berpelurus-nya adalah...</span></div>
+      <div class="pilihan-grid" id="q2">
+        <button class="pilihan-btn" onclick="pilih(this,'q2','a',false)"><span class="pilihan-key">A</span> 42°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q2','b',true)"><span class="pilihan-key">B</span> 132°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q2','c',false)"><span class="pilihan-key">C</span> 312°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q2','d',false)"><span class="pilihan-key">D</span> 48°</button>
+      </div>
+      <div class="feedback" id="fb2"></div>
+    </div>
+
+    <!-- Soal 3 - PG -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">3</span><span>Garis l sejajar garis m dipotong transversal. ∠2 = 70°. Besar sudut sehadap-nya (∠6) adalah...</span></div>
+      <div class="pilihan-grid" id="q3">
+        <button class="pilihan-btn" onclick="pilih(this,'q3','a',false)"><span class="pilihan-key">A</span> 110°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q3','b',true)"><span class="pilihan-key">B</span> 70°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q3','c',false)"><span class="pilihan-key">C</span> 20°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q3','d',false)"><span class="pilihan-key">D</span> 180°</button>
+      </div>
+      <div class="feedback" id="fb3"></div>
+    </div>
+
+    <!-- Soal 4 - PG -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">4</span><span>Dua garis sejajar dipotong transversal, terbentuk sudut dalam berseberangan ∠3 = 85°. Besar ∠6 adalah...</span></div>
+      <div class="pilihan-grid" id="q4">
+        <button class="pilihan-btn" onclick="pilih(this,'q4','a',false)"><span class="pilihan-key">A</span> 95°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q4','b',false)"><span class="pilihan-key">B</span> 180°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q4','c',true)"><span class="pilihan-key">C</span> 85°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q4','d',false)"><span class="pilihan-key">D</span> 75°</button>
+      </div>
+      <div class="feedback" id="fb4"></div>
+    </div>
+
+    <!-- Soal 5 - PG -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">5</span><span>Dalam segitiga PQR, ∠P = 65° dan ∠Q = 55°. Besar ∠R adalah...</span></div>
+      <div class="pilihan-grid" id="q5">
+        <button class="pilihan-btn" onclick="pilih(this,'q5','a',false)"><span class="pilihan-key">A</span> 50°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q5','b',true)"><span class="pilihan-key">B</span> 60°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q5','c',false)"><span class="pilihan-key">C</span> 70°</button>
+        <button class="pilihan-btn" onclick="pilih(this,'q5','d',false)"><span class="pilihan-key">D</span> 45°</button>
+      </div>
+      <div class="feedback" id="fb5"></div>
+    </div>
+
+    <!-- Soal 6 - Isian -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">6</span><span>Dua sudut saling berpenyiku. Salah satu sudutnya 34°. Besar sudut yang lain adalah... °</span></div>
+      <input type="number" class="isian-input" id="q6" placeholder="Masukkan jawaban dalam derajat">
+      <button class="check-btn" onclick="cekIsian('q6',56,'fb6')">Periksa Jawaban</button>
+      <div class="feedback" id="fb6"></div>
+    </div>
+
+    <!-- Soal 7 - Isian -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">7</span><span>Dua garis berpotongan. Jumlah dua sudut yang berdampingan adalah 180°. Jika salah satu sudutnya (5x − 10)° dan lainnya (3x + 30)°, nilai x = ...</span></div>
+      <input type="number" class="isian-input" id="q7" placeholder="Masukkan nilai x">
+      <button class="check-btn" onclick="cekIsian('q7',20,'fb7')">Periksa Jawaban</button>
+      <div class="feedback" id="fb7"></div>
+    </div>
+
+    <!-- Soal 8 - Isian -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">8</span><span>Segitiga ABC siku-siku di B. Jika ∠A = 38°, maka ∠C = ... °</span></div>
+      <input type="number" class="isian-input" id="q8" placeholder="Masukkan jawaban dalam derajat">
+      <button class="check-btn" onclick="cekIsian('q8',52,'fb8')">Periksa Jawaban</button>
+      <div class="feedback" id="fb8"></div>
+    </div>
+
+    <!-- Soal 9 - Isian -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">9</span><span>Garis l // m dipotong transversal. ∠1 = (4x + 15)° dan ∠5 = (6x − 5)°. Sudut sehadap, sehingga 4x + 15 = 6x − 5. Nilai x = ...</span></div>
+      <input type="number" class="isian-input" id="q9" placeholder="Masukkan nilai x">
+      <button class="check-btn" onclick="cekIsian('q9',10,'fb9')">Periksa Jawaban</button>
+      <div class="feedback" id="fb9"></div>
+    </div>
+
+    <!-- Soal 10 - Isian -->
+    <div class="soal-card">
+      <div class="soal-title"><span class="soal-num">10</span><span>Sudut luar segitiga pada salah satu titik sudutnya = 130°. Dua sudut dalam yang tidak berdekatan adalah 75° dan ... °</span></div>
+      <input type="number" class="isian-input" id="q10" placeholder="Masukkan jawaban dalam derajat">
+      <button class="check-btn" onclick="cekIsian('q10',55,'fb10')">Periksa Jawaban</button>
+      <div class="feedback" id="fb10"></div>
+    </div>
+
+  </div><!-- /tugas -->
+
+  <!-- ===================== LKPD ===================== -->
+  <div id="lkpd" class="section">
+    <div class="lkpd-header">
+      <h2>🔬 LKPD — Lembar Kerja Peserta Didik</h2>
+      <p>Hubungan Sudut pada Garis Berpotongan dan Garis Sejajar</p>
+      <div class="lkpd-info">
+        <span class="lkpd-tag">Kelas 7</span>
+        <span class="lkpd-tag">Waktu: 60 menit</span>
+        <span class="lkpd-tag">Kelompok / Individu</span>
+      </div>
+    </div>
+
+    <!-- Identitas -->
+    <div class="kegiatan-card">
+      <div class="kegiatan-hdr">📋 Identitas Peserta Didik</div>
+      <div class="kegiatan-body" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div>
+          <label style="font-size:12px;color:#6b7280;font-weight:600;">Nama</label>
+          <input class="obs-input" style="width:100%;margin-top:4px;display:block;" placeholder="Tulis namamu..." id="id_nama">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6b7280;font-weight:600;">Kelas / Absen</label>
+          <input class="obs-input" style="width:100%;margin-top:4px;display:block;" placeholder="Misal: 7A / 12" id="id_kelas">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6b7280;font-weight:600;">Tanggal</label>
+          <input type="date" class="obs-input" style="width:100%;margin-top:4px;display:block;" id="id_tgl">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6b7280;font-weight:600;">Nama Guru</label>
+          <input class="obs-input" style="width:100%;margin-top:4px;display:block;" placeholder="Nama guru pengampu" id="id_guru">
+        </div>
+      </div>
+    </div>
+
+    <!-- Tujuan -->
+    <div class="kegiatan-card">
+      <div class="kegiatan-hdr">🎯 Tujuan Kegiatan</div>
+      <div class="kegiatan-body">
+        <ul class="step-list">
+          <li data-n="1">Mengidentifikasi jenis-jenis sudut yang terbentuk pada dua garis berpotongan.</li>
+          <li data-n="2">Menemukan hubungan antar sudut pada dua garis sejajar yang dipotong transversal melalui pengamatan.</li>
+          <li data-n="3">Menggunakan sifat sudut untuk menyelesaikan masalah kontekstual.</li>
+          <li data-n="4">Menentukan besar sudut yang belum diketahui pada segitiga.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Kegiatan 1 -->
+    <div class="kegiatan-card">
+      <div class="kegiatan-hdr">🔀 Kegiatan 1 — Eksplorasi Dua Garis Berpotongan</div>
+      <div class="kegiatan-body">
+        <p style="font-size:13.5px;line-height:1.7;margin-bottom:12px;"><strong>Langkah kegiatan:</strong></p>
+        <ul class="step-list">
+          <li data-n="1">Gambarlah dua garis berpotongan di titik O. Beri nama garis pertama <em>g</em> dan garis kedua <em>h</em>.</li>
+          <li data-n="2">Beri nama sudut yang terbentuk: ∠1, ∠2, ∠3, ∠4 (searah jarum jam mulai dari kanan atas).</li>
+          <li data-n="3">Gunakan busur derajat untuk mengukur setiap sudut yang terbentuk.</li>
+          <li data-n="4">Catat hasil pengukuranmu pada tabel berikut:</li>
+        </ul>
+
+        <table class="obs-table" style="margin:14px 0;">
+          <thead>
+            <tr>
+              <th>Sudut</th>
+              <th>Posisi</th>
+              <th>Besar Sudut (°)</th>
+              <th>Pasangannya</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>∠1</td><td>Kanan atas</td>
+              <td class="input-cell"><input class="obs-input" id="k1s1" placeholder="...°"></td>
+              <td>∠3 (bertolak belakang)</td>
+            </tr>
+            <tr>
+              <td>∠2</td><td>Kiri atas</td>
+              <td class="input-cell"><input class="obs-input" id="k1s2" placeholder="...°"></td>
+              <td>∠4 (bertolak belakang)</td>
+            </tr>
+            <tr>
+              <td>∠3</td><td>Kiri bawah</td>
+              <td class="input-cell"><input class="obs-input" id="k1s3" placeholder="...°"></td>
+              <td>∠1 (bertolak belakang)</td>
+            </tr>
+            <tr>
+              <td>∠4</td><td>Kanan bawah</td>
+              <td class="input-cell"><input class="obs-input" id="k1s4" placeholder="...°"></td>
+              <td>∠2 (bertolak belakang)</td>
+            </tr>
+            <tr style="background:#f0fdfa;">
+              <td colspan="2" style="font-weight:700;color:#0f766e;">Jumlah ∠1+∠2+∠3+∠4</td>
+              <td class="input-cell"><input class="obs-input" id="k1jumlah" placeholder="...°"></td>
+              <td>Harus = 360°</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p style="font-size:13px;font-weight:700;margin:14px 0 6px;">Pertanyaan Analisis:</p>
+        <div style="margin-bottom:10px;font-size:13.5px;">
+          <p>1. Apakah ∠1 = ∠3? Apakah ∠2 = ∠4? Apa yang dapat kamu simpulkan?</p>
+          <textarea class="kesimpulan-area" id="k1p1" placeholder="Tulis jawabanmu di sini..."></textarea>
+        </div>
+        <div style="font-size:13.5px;">
+          <p>2. Berapa jumlah ∠1 + ∠2? Apa nama hubungan ini?</p>
+          <textarea class="kesimpulan-area" id="k1p2" placeholder="Tulis jawabanmu di sini..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kegiatan 2 -->
+    <div class="kegiatan-card">
+      <div class="kegiatan-hdr">🔲 Kegiatan 2 — Eksplorasi Garis Sejajar & Transversal</div>
+      <div class="kegiatan-body">
+        <ul class="step-list">
+          <li data-n="1">Gambarlah dua garis sejajar <em>l</em> dan <em>m</em> secara horizontal.</li>
+          <li data-n="2">Gambarlah garis transversal <em>t</em> yang memotong kedua garis. Beri nama 8 sudut yang terbentuk: ∠1–∠8.</li>
+          <li data-n="3">Ukur semua sudut menggunakan busur derajat, kemudian catat di tabel.</li>
+        </ul>
+        <table class="obs-table" style="margin:14px 0;">
+          <thead>
+            <tr>
+              <th>Sudut</th><th>Besar (°)</th><th>Sudut</th><th>Besar (°)</th><th>Hubungan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>∠1</td><td class="input-cell"><input class="obs-input" id="k2s1" placeholder="..."></td>
+              <td>∠5</td><td class="input-cell"><input class="obs-input" id="k2s5" placeholder="..."></td>
+              <td><input class="obs-input" id="k2h15" placeholder="Sehadap/..."></td>
+            </tr>
+            <tr>
+              <td>∠3</td><td class="input-cell"><input class="obs-input" id="k2s3" placeholder="..."></td>
+              <td>∠6</td><td class="input-cell"><input class="obs-input" id="k2s6" placeholder="..."></td>
+              <td><input class="obs-input" id="k2h36" placeholder="Bersilangan/..."></td>
+            </tr>
+            <tr>
+              <td>∠4</td><td class="input-cell"><input class="obs-input" id="k2s4" placeholder="..."></td>
+              <td>∠5</td><td class="input-cell"><input class="obs-input" id="k2s5b" placeholder="..."></td>
+              <td><input class="obs-input" id="k2h45" placeholder="Sepihak dalam/..."></td>
+            </tr>
+            <tr>
+              <td>∠2</td><td class="input-cell"><input class="obs-input" id="k2s2" placeholder="..."></td>
+              <td>∠8</td><td class="input-cell"><input class="obs-input" id="k2s8" placeholder="..."></td>
+              <td><input class="obs-input" id="k2h28" placeholder="Bersilangan luar/..."></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13.5px;font-weight:700;margin:12px 0 6px;">Kesimpulan Kegiatan 2:</p>
+        <textarea class="kesimpulan-area" id="k2kesimpulan" placeholder="Tuliskan kesimpulan hubungan antar sudut yang kamu temukan dari dua garis sejajar yang dipotong transversal..."></textarea>
+      </div>
+    </div>
+
+    <!-- Kegiatan 3 -->
+    <div class="kegiatan-card">
+      <div class="kegiatan-hdr">△ Kegiatan 3 — Eksplorasi Sudut dalam Segitiga</div>
+      <div class="kegiatan-body">
+        <ul class="step-list">
+          <li data-n="1">Gambarlah sebuah segitiga sembarang ABC di kertas.</li>
+          <li data-n="2">Gunting ketiga sudut segitiga tersebut.</li>
+          <li data-n="3">Susun ketiga potongan sudut tersebut berdampingan di atas garis lurus.</li>
+          <li data-n="4">Amati dan ukur setiap sudut, catat hasilnya:</li>
+        </ul>
+        <table class="obs-table" style="margin:14px 0;">
+          <thead>
+            <tr><th>Sudut</th><th>Besar yang Diukur (°)</th><th>Catatan</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>∠A</td>
+              <td class="input-cell"><input class="obs-input" id="k3a" placeholder="...°"></td>
+              <td><input class="obs-input" id="k3an" placeholder="misal: sudut lancip"></td>
+            </tr>
+            <tr>
+              <td>∠B</td>
+              <td class="input-cell"><input class="obs-input" id="k3b" placeholder="...°"></td>
+              <td><input class="obs-input" id="k3bn" placeholder="..."></td>
+            </tr>
+            <tr>
+              <td>∠C</td>
+              <td class="input-cell"><input class="obs-input" id="k3c" placeholder="...°"></td>
+              <td><input class="obs-input" id="k3cn" placeholder="..."></td>
+            </tr>
+            <tr style="background:#f0fdf4;">
+              <td style="font-weight:700;color:#16a34a;">∠A + ∠B + ∠C</td>
+              <td class="input-cell"><input class="obs-input" id="k3total" placeholder="...°"></td>
+              <td style="color:#16a34a;font-weight:600;">Harus ≈ 180°</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13.5px;font-weight:700;margin:12px 0 6px;">Pertanyaan:</p>
+        <p style="font-size:13.5px;margin-bottom:6px;">Dari hasil pengamatanmu, apa yang dapat disimpulkan tentang jumlah sudut dalam segitiga?</p>
+        <textarea class="kesimpulan-area" id="k3kesimpulan" placeholder="Tuliskan kesimpulanmu..."></textarea>
+      </div>
+    </div>
+
+    <!-- Soal Aplikasi -->
+    <div class="kegiatan-card">
+      <div class="kegiatan-hdr">🧮 Kegiatan 4 — Soal Aplikasi Kontekstual</div>
+      <div class="kegiatan-body">
+        <div style="background:#fef3c7;border-radius:10px;padding:14px;margin-bottom:14px;font-size:13.5px;line-height:1.7;">
+          <strong style="color:#92400e;">Masalah 1:</strong> Sebuah rel kereta api (dua garis sejajar) dipotong oleh jalan desa (garis transversal). Sudut yang terbentuk antara jalan dan rel di titik pertama adalah 65°. Berapa besar sudut di titik kedua pada sisi yang sama (sudut sepihak dalam)?
+        </div>
+        <textarea class="kesimpulan-area" id="app1" placeholder="Tulis penyelesaianmu langkah demi langkah..."></textarea>
+
+        <div style="background:#ede9fe;border-radius:10px;padding:14px;margin:14px 0;font-size:13.5px;line-height:1.7;">
+          <strong style="color:#5b21b6;">Masalah 2:</strong> Sebuah atap rumah berbentuk segitiga sama kaki. Kedua sudut alasnya masing-masing 70°. Berapa besar sudut puncak atap tersebut?
+        </div>
+        <textarea class="kesimpulan-area" id="app2" placeholder="Tulis penyelesaianmu langkah demi langkah..."></textarea>
+
+        <div style="background:#fce7f3;border-radius:10px;padding:14px;margin:14px 0;font-size:13.5px;line-height:1.7;">
+          <strong style="color:#9d174d;">Masalah 3:</strong> Dua garis berpotongan membentuk 4 sudut. Jika sudut terbesar adalah (3x + 15)° dan sudut terkecil adalah (2x − 5)°, dan keduanya berpelurus. Tentukan nilai x dan besar keempat sudut yang terbentuk!
+        </div>
+        <textarea class="kesimpulan-area" id="app3" placeholder="Tulis penyelesaianmu langkah demi langkah..."></textarea>
+      </div>
+    </div>
+
+    <!-- Refleksi -->
+    <div class="kegiatan-card">
+      <div class="kegiatan-hdr">💭 Refleksi Pembelajaran</div>
+      <div class="kegiatan-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <p style="font-size:13px;font-weight:600;margin-bottom:6px;">Apa yang sudah kamu pahami?</p>
+            <textarea class="kesimpulan-area" id="ref1" placeholder="Tuliskan pemahamanmu..."></textarea>
+          </div>
+          <div>
+            <p style="font-size:13px;font-weight:600;margin-bottom:6px;">Apa yang masih sulit bagimu?</p>
+            <textarea class="kesimpulan-area" id="ref2" placeholder="Tuliskan kesulitanmu..."></textarea>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <p style="font-size:13px;font-weight:600;margin-bottom:6px;">Tingkat pemahaman saya hari ini:</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;" id="pemahamanRating">
+            <button onclick="setRating(1)" style="padding:8px 16px;border:1.5px solid #d1d5db;border-radius:8px;background:white;cursor:pointer;font-family:var(--font);font-size:13px;" id="r1">😕 Belum paham</button>
+            <button onclick="setRating(2)" style="padding:8px 16px;border:1.5px solid #d1d5db;border-radius:8px;background:white;cursor:pointer;font-family:var(--font);font-size:13px;" id="r2">🤔 Sedikit paham</button>
+            <button onclick="setRating(3)" style="padding:8px 16px;border:1.5px solid #d1d5db;border-radius:8px;background:white;cursor:pointer;font-family:var(--font);font-size:13px;" id="r3">😊 Cukup paham</button>
+            <button onclick="setRating(4)" style="padding:8px 16px;border:1.5px solid #d1d5db;border-radius:8px;background:white;cursor:pointer;font-family:var(--font);font-size:13px;" id="r4">🌟 Sangat paham</button>
+          </div>
+        </div>
+        <button class="lkpd-submit" onclick="submitLKPD()">Kumpulkan LKPD</button>
+      </div>
+    </div>
+
+  </div><!-- /lkpd -->
+</div>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleMateri(hdr) {
+    const body = hdr.nextElementSibling;
+    const chevron = hdr.querySelector('.chevron');
+    body.classList.toggle('open');
+    chevron.classList.toggle('open');
+  }
+
+  let skor = 0;
+  let answered = {};
+
+  function pilih(btn, qid, key, isCorrect) {
+    if (answered[qid]) return;
+    answered[qid] = true;
+    const btns = document.querySelectorAll('#' + qid + ' .pilihan-btn');
+    const fb = document.getElementById('fb' + qid.replace('q',''));
+    btns.forEach(b => {
+      b.style.pointerEvents = 'none';
+    });
+    if (isCorrect) {
+      btn.classList.add('correct');
+      fb.textContent = '✅ Benar! Jawaban kamu tepat.';
+      fb.className = 'feedback show correct';
+      skor++;
+    } else {
+      btn.classList.add('wrong');
+      btns.forEach(b => {
+        if (b.getAttribute('onclick').includes('true')) b.classList.add('reveal-correct');
+      });
+      fb.textContent = '❌ Belum tepat. Perhatikan kembali konsep yang berkaitan.';
+      fb.className = 'feedback show wrong';
+    }
+    updateSkor();
+  }
+
+  function cekIsian(qid, jawaban, fbid) {
+    if (answered[qid]) return;
+    const val = parseFloat(document.getElementById(qid).value);
+    const fb = document.getElementById(fbid);
+    document.getElementById(qid).disabled = true;
+    if (val === jawaban) {
+      fb.textContent = '✅ Benar! Jawaban = ' + jawaban;
+      fb.className = 'feedback show correct';
+      skor++;
+      answered[qid] = true;
+    } else {
+      fb.textContent = '❌ Belum tepat. Jawaban yang benar adalah ' + jawaban + '°. Coba pelajari kembali materinya.';
+      fb.className = 'feedback show wrong';
+      answered[qid] = true;
+    }
+    updateSkor();
+  }
+
+  function updateSkor() {
+    const total = Object.keys(answered).length;
+    document.getElementById('skorDisplay').textContent = skor;
+    const pct = (total / 10) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    if (total === 10) {
+      let label = skor >= 8 ? '🌟 Luar biasa! Pemahaman sangat baik.' : skor >= 6 ? '👍 Bagus! Terus tingkatkan.' : '📚 Pelajari lagi materinya ya.';
+      document.getElementById('skorLabel').textContent = 'Skor akhir: ' + skor + '/10 — ' + label;
+    } else {
+      document.getElementById('skorLabel').textContent = total + ' dari 10 soal dikerjakan';
+    }
+  }
+
+  function setRating(n) {
+    for (let i=1;i<=4;i++) {
+      const btn = document.getElementById('r'+i);
+      btn.style.borderColor = i===n ? '#0f766e' : '#d1d5db';
+      btn.style.background = i===n ? '#f0fdfa' : 'white';
+      btn.style.color = i===n ? '#134e4a' : '';
+      btn.style.fontWeight = i===n ? '700' : '400';
+    }
+  }
+
+  function submitLKPD() {
+    const nama = document.getElementById('id_nama').value;
+    if (!nama) { alert('Isi nama terlebih dahulu!'); return; }
+    alert('LKPD berhasil dikumpulkan! Terima kasih ' + nama + ' 🎉\nGuru akan memeriksa jawabanmu segera.');
+  }
+</script>
